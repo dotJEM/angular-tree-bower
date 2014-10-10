@@ -28,9 +28,9 @@
                 require: req,
                 scope: true,
                 compile: function(elm, attr) {
-                    var watchExp = attr[name] || (isRoot ? attr.root : attr.node),
-                        match = (attr[name] || (isRoot ? attr.root : attr.node)).match(SW_REGEX),
-                        watchExp = match[1],
+                    var exp = attr[name] || (isRoot ? attr.root : attr.node),
+                        match = exp.match(SW_REGEX),
+                        watch = match[1],
                         priorAlias = match[3] || '',
                         template,
                         link = {
@@ -47,7 +47,7 @@
                                         scope[priorAlias] = value;
                                     }
                                 }
-                                scope.$watch(watchExp, updatePrior);
+                                scope.$watch(watch, updatePrior);
                             }
                         };
                     if(isRoot){
