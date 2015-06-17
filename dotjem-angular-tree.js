@@ -1,6 +1,6 @@
 /**
  * @license dotJEM Angular Tree
- * (c) 2012-2013 dotJEM (Jens Melgaard)
+ * (c) 2014-2015 dotJEM (Jens Melgaard)
  * License: MIT
  *
  * @module dotjem.angular.tree
@@ -69,8 +69,8 @@
                     ctrl.transclude(scope, function (clone, scope) {
                         elm.append(clone);
 
-                        scope.$dxLevel = 0;
-                        scope.$dxIsRoot = true;
+                        scope.$dxLevel = scope.$dxLevel + 1;
+                        scope.$dxIsRoot = false;
                         function updatePrior(value) {
                             scope.$dxPrior = value;
                             if (priorAlias !== '') {
