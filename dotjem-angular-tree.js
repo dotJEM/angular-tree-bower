@@ -28,9 +28,10 @@
                 var exp = attr['dxStartWith'] || attr.root,
                     match = exp.match(SW_REGEX),
                     watch = match[1],
-                    priorAlias = match[3] || '';
+                    alias = match[3] || '';
 
                 return function $RootNodeDirectiveLink(scope, elm, attr, ctrl, $transclude) {
+                    ctrl.alias = alias;
                     ctrl.transclude = $transclude;
                     ctrl.transclude(scope, function (clone, scope) {
                         elm.append(clone);
@@ -38,8 +39,8 @@
                         scope.$dxIsRoot = true;
                         function updatePrior(value) {
                             scope.$dxPrior = value;
-                            if (priorAlias !== '') {
-                                scope[priorAlias] = value;
+                            if (alias !== '') {
+                                scope[alias] = value;
                             }
                         }
                         scope.$watch(watch, updatePrior);
@@ -47,7 +48,6 @@
                 };
             }
         };
-        return directive;
     }
 
     function $NodeDirective() {
@@ -60,12 +60,10 @@
             multiElement: true,
 
             compile: function (elm, attr) {
-                var exp = attr['dxConnect'] || attr.connect,
-                    match = exp.match(SW_REGEX),
-                    watch = match[1],
-                    priorAlias = match[3] || '';
+                var watch = attr['dxConnect'] || attr.connect;
 
                 return function $NodeDirectiveLink(scope, elm, attr, ctrl) {
+                    alias = ctrl.alias || '';
                     ctrl.transclude(scope, function (clone, scope) {
                         elm.append(clone);
 
@@ -73,8 +71,8 @@
                         scope.$dxIsRoot = false;
                         function updatePrior(value) {
                             scope.$dxPrior = value;
-                            if (priorAlias !== '') {
-                                scope[priorAlias] = value;
+                            if (alias !== '') {
+                                scope[alias] = value;
                             }
                         }
 
